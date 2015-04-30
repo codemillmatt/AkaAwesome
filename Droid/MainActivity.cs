@@ -19,6 +19,8 @@ namespace AkaAwesome.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 
+			App.PlatformDecompression = new DecompressDroid ();
+
 			LoadApplication (new App ());
 		}
 	}

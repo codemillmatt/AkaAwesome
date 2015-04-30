@@ -69,8 +69,7 @@ namespace AkaAwesome
 				theAnswer = new AnswerInfo {
 					AnswerID = currAnswer.answer_id,
 					QuestionID = currAnswer.question_id,
-					AnswerBody = currAnswer.body,
-					LoadedFromWeb = true
+					AnswerBody = currAnswer.body
 				};						
 			}
 

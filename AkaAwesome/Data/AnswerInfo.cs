@@ -37,22 +37,10 @@ namespace AkaAwesome
 				if (answerBody != value) {
 					answerBody = value;
 					OnPropertyChanged ("AnswerBody");
-					OnPropertyChanged ("LoadedFromText");
 				}
 			}
 		}
 			
-		public bool LoadedFromWeb {
-			get;
-			set;
-		}
-			
-		public string LoadedFromText {
-			get {
-				return LoadedFromWeb ? "Loaded From Web" : "Loaded From Database";
-			}
-		}
-
 		protected virtual void OnPropertyChanged (string propertyName)
 		{
 			if (PropertyChanged != null) {

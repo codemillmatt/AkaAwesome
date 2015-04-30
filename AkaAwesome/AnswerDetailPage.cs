@@ -37,7 +37,7 @@ namespace AkaAwesome
 					_theFullAnswer
 				}
 			};
-					
+							
 		}
 
 		protected async override void OnAppearing ()
@@ -54,7 +54,7 @@ namespace AkaAwesome
 				async() => await new StackOverflowService().GetAnswerForQuestion(questionId),
 				DateTime.Now.AddDays(1)
 			);
-
+				
 			if (currentAnswer != null) {
 				_theAnswer.AnswerID = currentAnswer.AnswerID;
 				_theAnswer.QuestionID = currentAnswer.QuestionID;
