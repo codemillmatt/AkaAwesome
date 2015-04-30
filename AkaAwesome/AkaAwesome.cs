@@ -13,7 +13,9 @@ namespace AkaAwesome
 				
 		public App ()
 		{
-			MainPage = new NavigationPage (new QuestionListPage ());
+			Akavache.BlobCache.ApplicationName = "AkaAwesome";
+
+			MainPage = new NavigationPage (new QuestionDateListPage ());
 		}
 			
 	}
