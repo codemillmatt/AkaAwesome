@@ -51,30 +51,36 @@ namespace AkaAwesome
 					
 		}
 
-		protected async override void OnAppearing ()
+		protected override void OnAppearing ()
 		{
 			base.OnAppearing ();
 
 			if (_initialDisplay) {
-				await LoadQuestions ();
+				LoadQuestions ();
 				_initialDisplay = false;	
 			}
 		}
-			
-		protected async Task LoadQuestions ()
-		{
-			_displayQuestions.Clear ();
 
-			IList<QuestionInfo> questions = new List<QuestionInfo> ();
-
-			questions = await BlobCache.LocalMachine.GetOrFetchObject<IList<QuestionInfo>> (
+		protected void LoadQuestions ()
+		{			
+			BlobCache.LocalMachine.GetAndFetchLatest<IList<QuestionInfo>> (
 				_dateToDisplay.Ticks.ToString (),
 				async () => await new StackOverflowService ().GetQuestions (_dateToDisplay),
+				null,
 				_dateToDisplay.AddDays (7)
-			);
+			).Subscribe (
+				returnedQuestions => {
+					Device.BeginInvokeOnMainThread (() => DisplayQuestions (returnedQuestions));
+				}
+			);				
+		}
 
-			foreach (var item in questions) {					
-				_displayQuestions.Insert (0, item);
+		private void DisplayQuestions (IList<QuestionInfo> questions)
+		{
+			foreach (var item in questions) {
+				if (!_displayQuestions.Contains (item)) {
+					_displayQuestions.Insert (0, item);
+				}
 			}
 		}
 
