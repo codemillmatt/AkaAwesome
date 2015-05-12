@@ -12,7 +12,7 @@ namespace AkaAwesome
 			Title = "Xamarin Questions";
 			List<string> datesToDisplay = new List<string> ();
 
-			for (int i = 0; i < 7; i++) {
+			for (int i = 0; i < 14; i++) {
 				datesToDisplay.Add (DateTime.Now.AddDays (i * -1).ToString ("D"));
 			}
 

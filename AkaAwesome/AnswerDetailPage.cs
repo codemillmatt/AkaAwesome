@@ -52,7 +52,7 @@ namespace AkaAwesome
 			AnswerInfo currentAnswer = await BlobCache.LocalMachine.GetOrFetchObject<AnswerInfo>(
 				_questionId.ToString(),
 				async() => await new StackOverflowService().GetAnswerForQuestion(questionId),
-				DateTime.Now.AddDays(1)
+				DateTime.Now.AddDays(7)
 			);
 				
 			if (currentAnswer != null) {
@@ -60,7 +60,7 @@ namespace AkaAwesome
 				_theAnswer.QuestionID = currentAnswer.QuestionID;
 				_theAnswer.AnswerBody = currentAnswer.AnswerBody;
 			} else {
-				// Nothing found on the web or in the cache - so invalidate the cache
+				// Nothing found on the web or in the cache - so invalidate the cache - don't want null stored
 				await BlobCache.LocalMachine.InvalidateObject<AnswerInfo> (_questionId.ToString ());
 
 				_theAnswer.AnswerID = 0;
