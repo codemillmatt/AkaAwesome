@@ -128,7 +128,7 @@ namespace AkaAwesome
 					}
 				}
 			
-				return content;
+				return System.Net.WebUtility.HtmlDecode (content);
 			}
 		}
 	}
