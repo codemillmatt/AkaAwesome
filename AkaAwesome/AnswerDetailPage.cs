@@ -24,7 +24,7 @@ namespace AkaAwesome
 			HtmlWebViewSource webSource = new HtmlWebViewSource ();
 
 			webSource.BindingContext = _theAnswer;
-			webSource.SetBinding (HtmlWebViewSource.HtmlProperty, new Binding("AnswerBody"));
+			webSource.SetBinding (HtmlWebViewSource.HtmlProperty, new Binding ("AnswerBody"));
 
 			_theFullAnswer = new WebView { 
 				Source = webSource,
@@ -44,17 +44,17 @@ namespace AkaAwesome
 		{
 			base.OnAppearing ();
 
-			await LoadAnswers (_questionId);
+			await LoadAnswer (_questionId);
 		}
 
-		protected async Task LoadAnswers (int questionId)
+		protected async Task LoadAnswer (int questionId)
 		{	
-			AnswerInfo currentAnswer = await BlobCache.LocalMachine.GetOrFetchObject<AnswerInfo>(
-				_questionId.ToString(),
-				async() => await new StackOverflowService().GetAnswerForQuestion(questionId),
-				DateTime.Now.AddDays(7)
-			);
-				
+			AnswerInfo currentAnswer = await BlobCache.LocalMachine.GetOrFetchObject<AnswerInfo> (
+				                         _questionId.ToString (),
+				                         async() => await new StackOverflowService ().GetAnswerForQuestion (questionId),
+				                         DateTime.Now.AddDays (7)
+			                         );
+		
 			if (currentAnswer != null) {
 				_theAnswer.AnswerID = currentAnswer.AnswerID;
 				_theAnswer.QuestionID = currentAnswer.QuestionID;
@@ -63,8 +63,6 @@ namespace AkaAwesome
 				// Nothing found on the web or in the cache - so invalidate the cache - don't want null stored
 				await BlobCache.LocalMachine.InvalidateObject<AnswerInfo> (_questionId.ToString ());
 
-				_theAnswer.AnswerID = 0;
-				_theAnswer.QuestionID = 0;
 				_theAnswer.AnswerBody = "No answer found on StackOverflow or in cache";
 			}				
 		}

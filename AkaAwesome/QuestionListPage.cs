@@ -68,11 +68,11 @@ namespace AkaAwesome
 				async () => await new StackOverflowService ().GetQuestions (_dateToDisplay),
 				null,
 				_dateToDisplay.AddDays (7)
-			).Subscribe (
+			).Catch (Observable.Return (new List<QuestionInfo> ())).Subscribe (
 				returnedQuestions => {
 					Device.BeginInvokeOnMainThread (() => DisplayQuestions (returnedQuestions));
 				}
-			);				
+			);			
 		}
 
 		private void DisplayQuestions (IList<QuestionInfo> questions)
